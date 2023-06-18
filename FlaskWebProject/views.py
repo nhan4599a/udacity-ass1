@@ -128,10 +128,11 @@ def authorized():
     if request.args.get('code'):
         # TODO: Acquire a token from a built msal app, along with the appropriate redirect URI
         msal_app = _build_msal_app()
+        redirect_uri = _build_redirect_uri(request.url_root[:-1])
         result = msal_app.acquire_token_by_authorization_code(
-                        request.args.get('code'),
-                        Config.SCOPES,
-                        f'{request.url_root[:-1]}{Config.MS_LOGIN_REDIRECT_PATH}')
+                            request.args.get('code'),
+                            Config.SCOPES,
+                            redirect_uri)
         if "error" in result:
             app.logger.warning('Microsoft account login failed, error: %s', result)
             return render_template("auth_error.html", result=result)
@@ -181,7 +182,11 @@ def _build_msal_app():
 
 
 def _build_msal_auth_url(host, state):
-    host = re.sub(r'^http://', 'https://', host)
-    redirect_uri = f'{host}{Config.MS_LOGIN_REDIRECT_PATH}'
+    redirect_uri = _build_redirect_uri(host)
     msal_app = _build_msal_app()
     return msal_app.get_authorization_request_url(Config.SCOPES, state=state, redirect_uri=redirect_uri)
+
+
+def _build_redirect_uri(host):
+    host = re.sub(r'^http://', 'https://', host)
+    return f'{host}{Config.MS_LOGIN_REDIRECT_PATH}'

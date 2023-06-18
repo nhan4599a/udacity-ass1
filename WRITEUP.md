@@ -17,3 +17,4 @@ In scenario of this app, Azure App Service is look like more suitable then the A
 
 *Detail how the app and any other needs would have to change for you to change your decision in the last section.* 
 
+I will change to use Azure VM if this application run more effective on windows environment because look like Azure App Service with Python runtime is running on linux underlying. Or when this app have some features like availability to write report weekly to excel file, which is sometime require more configuration to OS level. Or maybe the app require more than 4 vCPUs, 14GB RAM or 250GB storage which is maximum hardware configuration of Azure App Service (Premium v2 P3V2) i will move to use Azure VM since it's allow me to attach an azure storage account instance to store your data which is much more bigger than 250GB of storage when azure storage account can be store up to 5PiB
