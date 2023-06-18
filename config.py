@@ -4,24 +4,24 @@ import urllib.parse
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
-    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT') or 'udacity4599'
+    BLOB_ACCOUNT = os.environ.get('BLOB_ACCOUNT')
     BLOB_CONTAINER = os.environ.get('BLOB_CONTAINER') or 'images'
-    BLOB_STORAGE_ACCOUNT_URL = os.environ.get('BLOB_STORAGE_URL') or 'DefaultEndpointsProtocol=https;AccountName=udacity4599;AccountKey=Ddl3dVxfefTLoJp+CDYWXoAtz/KH03v8VC16h7rzBXlYoXTGMYXeBhY6hJzP34s5SAmVW78fEbj5+AStdg8RRQ==;EndpointSuffix=core.windows.net'
+    BLOB_STORAGE_ACCOUNT_URL = os.environ.get('BLOB_STORAGE_URL')
 
-    SQL_SERVER = os.environ.get('SQL_SERVER') or 'nhan4599-udacity.database.windows.net'
+    SQL_SERVER = os.environ.get('SQL_SERVER') or '.\\SQLDev'
     SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'udacity-ass1'
-    SQL_USER_NAME = os.environ.get('SQL_USER_NAME') or 'nhan4599'
-    SQL_PASSWORD = os.environ.get('SQL_PASSWORD') or 'p@nCake061000'
+    SQL_USER_NAME = os.environ.get('SQL_USER_NAME')
+    SQL_PASSWORD = os.environ.get('SQL_PASSWORD')
     # Below URI may need some adjustments for driver version, based on your OS, if running locally
     SQLALCHEMY_DATABASE_URI = f'mssql+pyodbc://{SQL_USER_NAME}:{urllib.parse.quote(SQL_PASSWORD)}@{SQL_SERVER}/{SQL_DATABASE}?driver=ODBC+Driver+17+for+SQL+Server'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     ### Info for MS Authentication ###
     ### As adapted from: https://github.com/Azure-Samples/ms-identity-python-webapp ###
-    MS_CLIENT_ID = os.environ.get('CLIENT_ID')
-    MS_CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+    MS_CLIENT_ID = os.environ.get('MS_CLIENT_ID')
+    MS_CLIENT_SECRET = os.environ.get('MS_CLIENT_SECRET')
     # In your production app, Microsoft recommends you to use other ways to store your secret,
     # such as KeyVault, or environment variable as described in Flask's documentation here:
     # https://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
