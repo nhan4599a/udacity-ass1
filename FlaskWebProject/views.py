@@ -80,8 +80,6 @@ def login():
     if form.validate_on_submit():
         data = get_form_values(form)
         user = User.query.filter_by(username=data['username'], is_external_user=False).first()
-        print(len(user.password_hash))
-        print(data['password'])
         if user is None or not user.check_password(data['password']):
             if user is None:
                 app.logger.info('Internal account \"%s\" does not existed, login failed', data['username'])
@@ -110,7 +108,6 @@ def register():
             form.username.errors.append('Username is already in used')
         else:
             user = User.init_user(register_data['username'], register_data['password'])
-            print(len(user.password_hash))
             db.session.add(user)
             db.session.commit()
             flash('Register new account successfully')
