@@ -13,6 +13,7 @@ from FlaskWebProject.models import User, Post, UserProvider
 import msal
 import uuid
 from FlaskWebProject.helper import get_form_values
+import re
 
 IMAGE_SOURCE_URL = f'https://{app.config["BLOB_ACCOUNT"]}.blob.core.windows.net/{app.config["BLOB_CONTAINER"]}/'
 
@@ -180,6 +181,7 @@ def _build_msal_app():
 
 
 def _build_msal_auth_url(host, state):
+    host = re.sub(r'^http://', 'https://', host)
     redirect_uri = f'{host}{Config.MS_LOGIN_REDIRECT_PATH}'
     msal_app = _build_msal_app()
     return msal_app.get_authorization_request_url(Config.SCOPES, state=state, redirect_uri=redirect_uri)
